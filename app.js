@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const app = express();
 
 //Middlewares 
-
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 //Routes
 
 //Server
