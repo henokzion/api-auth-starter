@@ -10,6 +10,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 //Routes
 
+app.use("/", require("./routes"))
 //Server
 const PORT = process.env.PORT || 8000;
 

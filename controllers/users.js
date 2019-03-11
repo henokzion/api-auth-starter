@@ -8,5 +8,5 @@ const signIn = (req, res) => {
 
 module.exports = {
     signIn,
-    signup
+    signUp
 }
