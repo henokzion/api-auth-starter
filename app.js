@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost/LearningIDE");
+mongoose.connect("mongodb://localhost/LearningIDE", { useNewUrlParser: true });
 
 const app = express();
 

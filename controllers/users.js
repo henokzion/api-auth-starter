@@ -1,5 +1,13 @@
-const signUp = (req, res) => {
-    res.json({"message" : "signup"});
+const User = require("../models/users");
+
+const signUp = async (req, res) => {
+    const user = new User({   
+        email: req.body.email,
+        password : req.body.password
+    });
+
+    await user.save();
+    res.json(user);
 }
 
 const signIn = (req, res) => {
@@ -8,5 +16,6 @@ const signIn = (req, res) => {
 
 module.exports = {
     signIn,
+
     signUp
 }
