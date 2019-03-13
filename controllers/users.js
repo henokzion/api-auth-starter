@@ -2,6 +2,7 @@ const JWT = require("jsonwebtoken");
 
 const User = require("../models/users");
 
+
 const signToken = (user) =>{
     return JWT.sign({
         iss: "learningide",
@@ -23,6 +24,10 @@ const signUp = async (req, res) => {
     res.json({token});
 }
 
+const secret = (req, res)=>{
+    res.json({"message" : " this is a secret"});
+}
+
 const signIn = (req, res) => {
     token = signToken(user);
     res.json({token});
@@ -30,6 +35,6 @@ const signIn = (req, res) => {
 
 module.exports = {
     signIn,
-
-    signUp
+    signUp,
+    secret
 }
