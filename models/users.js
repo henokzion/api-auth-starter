@@ -6,7 +6,16 @@ const userSchema = new mongoose.Schema({
     local :{ 
         password: String,
         email: String
-    }
+    },
+    google: {
+        id: {
+          type: String
+        },
+        email: {
+          type: String,
+          lowercase: true
+        }
+      },
 });
 
 userSchema.pre('save', async function (next) {

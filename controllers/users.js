@@ -42,9 +42,19 @@ const signIn = (req, res) => {
         token
     });
 }
+const googleOAuth = async (req, res, next) => {
+    // Generate token
+    const token = signToken(req.user);
+    res.status(200).json({
+        token
+    });
+}
+
+
 
 module.exports = {
     signIn,
     signUp,
+    googleOAuth,
     secret
 }
