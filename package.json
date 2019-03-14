@@ -10,6 +10,7 @@
   "author": "Henok <henokzion@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
