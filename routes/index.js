@@ -11,7 +11,7 @@ router
 
 router
     .route("/signin")
-    .post(userCtrl.signIn);
+    .post(passport.authenticate("local", {session : false}), userCtrl.signIn);
 
 router
     .route("/secret")
