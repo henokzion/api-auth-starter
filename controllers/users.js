@@ -13,6 +13,15 @@ const signToken = (user) => {
 }
 
 const signUp = async (req, res) => {
+    const foundUser = await User.findOne({
+        "local.email" : req.body.email
+    });
+    if (foundUser) {
+        return res.status(403).json({
+            error: 'Email is already in use'
+        });
+    }
+    console.log(foundUser)
     const user = new User({
 
         local: {

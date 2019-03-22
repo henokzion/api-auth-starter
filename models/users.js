@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     method: String,
     local :{ 
         password: String,
-        email: String
+        email: String,
     },
     google: {
         id: {
