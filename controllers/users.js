@@ -14,6 +14,21 @@ const signToken = (user) => {
     }, "this is a secret")
 }
 
+var sendVerifyEmail = (res, user) => {
+    const token = signToken(user);
+    var verificationText = `http://localhost:3000/confirmation?verify=${token}`;
+    
+    sgMail.setApiKey("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");
+    const msg = {
+        to: user.local.email,
+        from: 'noreply@briter.com',
+        subject: 'verify your email',
+        text: verificationText
+    };
+    sgMail.send(msg);
+    res.status(200).json({"message": "not verified"});
+}
+
 const signUp = async (req, res) => {
     const foundUser = await User.findOne({
         "local.email" : req.body.email
@@ -35,10 +50,7 @@ const signUp = async (req, res) => {
 
     await user.save();
 
-    token = signToken(user);
-    res.json({
-        token
-    });
+    sendVerifyEmail(res, user);
 }
 
 const secret = (req, res) => {
@@ -107,10 +119,7 @@ var saveLinkedinInfo = async (res, profile)=>{
 }
 
 const signInWithLinkedin = async (req, res, next) => {
-    
-     
-   
-     var data = {
+    var data = {
         grant_type: "authorization_code",
         code : req.body.code,
         redirect_uri: "http://localhost:3000/linkedin",
