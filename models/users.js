@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
         password: String,
         email: String,
     },
-    verified : Boolean,
+    confirmed : {type: Boolean, "default" : false},
     linkedin: {
         id: {
             type: String

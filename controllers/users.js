@@ -154,7 +154,7 @@ var sendPasswordChangeEmail = async (res, user) => {
     const token = signToken(user);
 
     //"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"
-    var verificationText = `http://localhost:3000/changepassword?verify=${token}`;
+    var verificationText = `http://localhost:3000/changepasswordverify?verify=${token}`;
     
     sgMail.setApiKey("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");
     const msg = {
@@ -185,6 +185,12 @@ const requestPasswordChange = async (req, res)=>{
     }
 }
 
+verify = async(req, res, next)=>{
+    const token = signToken(req.user);
+    res.status(200).json({
+        token
+    });
+}
 
 module.exports = {
     signIn,

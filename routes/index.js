@@ -27,5 +27,9 @@ router
 router
     .route('/users/request-password-change')
     .post(userCtrl.requestPasswordChange)
+
+router
+    .route('/users/verify')
+    .get(passport.authenticate('verify', {session: false}), UserController.verify )
     
 module.exports = router;
