@@ -1,6 +1,7 @@
 const JWT = require("jsonwebtoken");
 const querystring = require("query-string")
 var request = require('request');
+const sgMail = require('@sendgrid/mail');
 
 const User = require("../models/users");
 

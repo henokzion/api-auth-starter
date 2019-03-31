@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require("cors");
 
-mongoose.connect("mongodb://localhost/LearningIDE", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/Briter", { useNewUrlParser: true });
 
 const app = express();
 

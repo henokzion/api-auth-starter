@@ -10,6 +10,7 @@
   "author": "Henok <henokzion@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
