@@ -41,7 +41,7 @@ const signUp = async (req, res) => {
     }
     console.log(foundUser)
     const user = new User({
-
+        username : req.body.username,
         local: {
             email: req.body.email,
             password: req.body.password
