@@ -198,5 +198,6 @@ module.exports = {
     googleOAuth,
     secret,
     signInWithLinkedin,
-    requestPasswordChange
+    requestPasswordChange,
+    verify
 }

@@ -30,6 +30,6 @@ router
 
 router
     .route('/users/verify')
-    .get(passport.authenticate('verify', {session: false}), UserController.verify )
+    .get(passport.authenticate('verify', {session: false}), userCtrl.verify )
     
 module.exports = router;

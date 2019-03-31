@@ -87,7 +87,7 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
     }
 }));
 
-passport.use('verify', new JWTStrategy({
+passport.use('verify', new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromUrlQueryParameter('verify'),
     secretOrKey: JWT_SECRET
 }, async (payload, done) => {

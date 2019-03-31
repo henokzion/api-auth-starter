@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
         password: String,
         email: String,
     },
+    username : {
+        type: String, unique : true
+    },
     confirmed : {type: Boolean, "default" : false},
     linkedin: {
         id: {
