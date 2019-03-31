@@ -150,7 +150,40 @@ const signInWithLinkedin = async (req, res, next) => {
             getLinkedinInfo(res, access_token);
       });
 }
+var sendPasswordChangeEmail = async (res, user) => {
+    const token = signToken(user);
 
+    //"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"
+    var verificationText = `http://localhost:3000/changepassword?verify=${token}`;
+    
+    sgMail.setApiKey("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");
+    const msg = {
+        to: user.local.email,
+        from: 'noreply@briter.com',
+        subject: 'Change Your password',
+        text: verificationText
+    };
+    sgMail.send(msg);
+    res.status(200).json({"message": "not verified"});
+}
+
+const requestPasswordChange = async (req, res)=>{
+    if(req.body.email){
+        User
+            .findOne({method : 'local', "local.email" : req.body.email})
+            .exec((err, user)=>{
+                if(err)
+                    return res.status(400).json(err);
+                if(user)
+                    sendPasswordChangeEmail(res, user);
+                else
+                    res.status(404).json({"message":"user not found"});
+            })
+    
+    }else{
+        res.json({"message": "please provide a valid email"});
+    }
+}
 
 
 module.exports = {
@@ -158,5 +191,6 @@ module.exports = {
     signUp,
     googleOAuth,
     secret,
-    signInWithLinkedin
+    signInWithLinkedin,
+    requestPasswordChange
 }

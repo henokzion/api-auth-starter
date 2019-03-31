@@ -20,7 +20,12 @@ router
 router.route('/oauth/google')
     .post(passport.authenticate('googleToken', { session: false }), userCtrl.googleOAuth);
 
-    router
+router
     .route('/oauth/linkedin')
     .post(userCtrl.signInWithLinkedin);
+
+router
+    .route('/users/request-password-change')
+    .post(userCtrl.requestPasswordChange)
+    
 module.exports = router;
