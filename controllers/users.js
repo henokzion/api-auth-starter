@@ -203,11 +203,19 @@ const requestPasswordChange = async (req, res) => {
     }
 }
 
-verify = async (req, res, next) => {
+const verify = async (req, res, next) => {
     const token = signToken(req.user);
     res.status(200).json({
         token
     });
+}
+const changePassword = async (req, res)=>{
+    if(req.user){
+        const user = req.user;
+        user.local.password = req.body.password;
+        await user.save();
+        res.status(200).json({"message": "password changed"})
+    }
 }
 
 module.exports = {
@@ -217,5 +225,6 @@ module.exports = {
     secret,
     signInWithLinkedin,
     requestPasswordChange,
-    verify
+    verify,
+    changePassword
 }

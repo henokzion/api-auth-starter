@@ -37,6 +37,7 @@ passport.use(new LocalStrategy({
             "local.email": email
         });
 
+        console.log(email)
 
         if (!user) {
             return done(null, false);

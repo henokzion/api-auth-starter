@@ -29,6 +29,10 @@ router
     .post(userCtrl.requestPasswordChange)
 
 router
+    .route('/users/profile/change-password')
+    .post(passport.authenticate("jwt", {session : false}), userCtrl.changePassword);
+
+router
     .route('/users/verify')
     .get(passport.authenticate('verify', {session: false}), userCtrl.verify )
     
