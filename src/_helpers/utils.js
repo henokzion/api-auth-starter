@@ -8,3 +8,5 @@ const signToken = (user) => {
         exp: new Date().setDate(new Date().getDate() + 1)
     }, "this is a secret")
 }
+
+module.exports = {signToken}
