@@ -1,29 +1,13 @@
-if (process.env.NODE_ENV === 'test') {
-  module.exports = {
-    JWT_SECRET: 'codeworkrauthentication',
-    oauth: {
-      google: {
-        clientID: '366510432233-cp0s337b63lkjg2g8sc2gvjas26gt3ns.apps.googleusercontent.com',
-        clientSecret: 'XqdmV8Wz578OszyyPk9mU6S9',
-      },
-      facebook: {
-        clientID: '366510432233-cp0s337b63lkjg2g8sc2gvjas26gt3ns.apps.googleusercontent.com',
-        clientSecret: '535ebcfe39032f889232f880b049617c',
-      },
+module.exports = {
+  JWT_SECRET: process.env.JWT_SECRET,
+  oauth: {
+    google: {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
-  };
-} else {
-  module.exports = {
-    JWT_SECRET: 'something',
-    oauth: {
-      google: {
-        clientID: '366510432233-cp0s337b63lkjg2g8sc2gvjas26gt3ns.apps.googleusercontent.com',
-        clientSecret: 'XqdmV8Wz578OszyyPk9mU6S9',
-      },
-      facebook: {
-        clientID: '1440510842722881',
-        clientSecret: '535ebcfe39032f889232f880b049617c',
-      },
+    facebook: {
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     },
-  };
-}
+  },
+};

@@ -105,3 +105,10 @@ passport.use('verify', new JwtStrategy({
         done(error, false);
     }
 }))
+
+module.exports = {
+    passportLocal : passport.authenticate("local", {session : false}),
+    passportJwt : passport.authenticate("jwt", {session : false}),
+    passportGoogle : passport.authenticate('googleToken', { session: false }),
+    passportVerify : passport.authenticate('verify', {session: false})
+}

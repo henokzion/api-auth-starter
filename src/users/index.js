@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 
 const userCtrl = require("./ctrl");
-const passportConf = require("../passport");
+const {passportJwt, passportLocal, passportVerify, passportGoogle} = require("../passport");
 
 router
     .route("/signup")
@@ -11,14 +10,14 @@ router
 
 router
     .route("/signin")
-    .post(passport.authenticate("local", {session : false}), userCtrl.signIn);
+    .post(passportLocal, userCtrl.signIn);
 
 router
     .route("/secret")
-    .get(passport.authenticate("jwt", {session : false}), userCtrl.secret);
+    .get(passportJwt, userCtrl.secret);
 
 router.route('/oauth/google')
-    .post(passport.authenticate('googleToken', { session: false }), userCtrl.googleOAuth);
+    .post(passportGoogle, userCtrl.googleOAuth);
 
 router
     .route('/oauth/linkedin')
@@ -30,10 +29,10 @@ router
 
 router
     .route('/profile/change-password')
-    .post(passport.authenticate("jwt", {session : false}), userCtrl.changePassword);
+    .post(passportJwt, userCtrl.changePassword);
 
 router
     .route('/verify')
-    .get(passport.authenticate('verify', {session: false}), userCtrl.verify )
+    .get(passportVerify, userCtrl.verify )
     
 module.exports = router;
