@@ -4,7 +4,9 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require("cors");
 
-mongoose.connect("mongodb://localhost/Briter", {
+const { MONGO_URI } =  require("./config");
+
+mongoose.connect( MONGO_URI , {
     useNewUrlParser: true, 
     useCreateIndex: true,
     useUnifiedTopology: true 
