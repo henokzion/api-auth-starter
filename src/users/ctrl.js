@@ -4,6 +4,7 @@ var request = require('request');
 const sgMail = require('@sendgrid/mail');
 
 const User = require("./model");
+const UserDal =  require("./dal")
 
 
 const signToken = (user) => {
@@ -32,27 +33,14 @@ var sendVerifyEmail = (res, user) => {
 }
 
 const signUp = async (req, res) => {
-    const foundUser = await User.findOne({
-        "local.email": req.body.email
-    });
-    if (foundUser) {
-        return res.status(403).json({
-            error: 'Email is already in use'
-        });
+    try {
+        UserDal.create(req.body)
+        sendVerifyEmail(res, user);
+    } catch (error) {
+        
     }
-    console.log(foundUser)
-    const user = new User({
-        username: req.body.username,
-        local: {
-            email: req.body.email,
-            password: req.body.password
-        },
-        method: "local"
-    });
 
-    await user.save();
-
-    sendVerifyEmail(res, user);
+    
 }
 
 const secret = (req, res) => {
