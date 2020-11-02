@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require("cors");
 
+const { handleError } = require('./src/_helpers/error')
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -25,6 +27,12 @@ app.use(cors())
 //Routes
 
 app.use("/", require("./src"))
+
+//Error handling
+app.use((err, req, res, next) => {
+    handleError(err, res);
+});
+
 //Server
 const PORT = process.env.PORT || 8000;
 

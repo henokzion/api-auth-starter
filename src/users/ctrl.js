@@ -3,6 +3,8 @@ const querystring = require("query-string")
 var request = require('request');
 const sgMail = require('@sendgrid/mail');
 
+const {VERIFY_EMAILS} = require("../../config")
+
 const User = require("./model");
 const UserDal =  require("./dal")
 
@@ -27,20 +29,18 @@ var sendVerifyEmail = (res, user) => {
         text: verificationText
     };
     sgMail.send(msg);
-    res.status(200).json({
-        "message": "not verified"
-    });
 }
 
-const signUp = async (req, res) => {
+const signUp = async (req, res, next) => {
     try {
-        UserDal.create(req.body)
-        sendVerifyEmail(res, user);
+        const user = await UserDal.create(req.body, next)
+        console.log(user)
+        VERIFY_EMAILS && sendVerifyEmail(res, user);
+        res.json(user)
     } catch (error) {
-        
+        console.log(error)
+        next(error)
     }
-
-    
 }
 
 const secret = (req, res) => {
