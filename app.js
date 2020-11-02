@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require("cors");
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const { MONGO_URI } =  require("./config");
 
 mongoose.connect( MONGO_URI , {
@@ -15,6 +18,7 @@ mongoose.connect( MONGO_URI , {
 const app = express();
 
 //Middlewares 
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors())

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const userCtrl = require("./ctrl");
-const {passportJwt, passportLocal, passportVerify, passportGoogle} = require("../passport");
+const {passportJwt, passportLocal, passportVerify} = require("../passport");
 
 router
     .route("/signup")
@@ -15,13 +15,6 @@ router
 router
     .route("/secret")
     .get(passportJwt, userCtrl.secret);
-
-router.route('/oauth/google')
-    .post(passportGoogle, userCtrl.googleOAuth);
-
-router
-    .route('/oauth/linkedin')
-    .post(userCtrl.signInWithLinkedin);
 
 router
     .route('/request-password-change')

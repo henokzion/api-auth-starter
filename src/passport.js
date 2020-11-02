@@ -56,37 +56,6 @@ passport.use(new LocalStrategy({
     }
 }))
 
-passport.use('googleToken', new GooglePlusTokenStrategy({
-    clientID: config.oauth.google.clientID,
-    clientSecret: config.oauth.google.clientSecret
-}, async (accessToken, refreshToken, profile, done) => {
-    try {
-        // Should have full user profile over here
-        console.log('profile', profile);
-        console.log('accessToken', accessToken);
-        console.log('refreshToken', refreshToken);
-
-        const existingUser = await User.findOne({
-            "google.id": profile.id
-        });
-        if (existingUser) {
-            return done(null, existingUser);
-        }
-
-        const newUser = new User({
-            method: 'google',
-            google: {
-                id: profile.id,
-                email: profile.emails[0].value
-            }
-        });
-
-        await newUser.save();
-        done(null, newUser);
-    } catch (error) {
-        done(error, false, error.message);
-    }
-}));
 
 passport.use('verify', new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromUrlQueryParameter('verify'),
@@ -109,6 +78,5 @@ passport.use('verify', new JwtStrategy({
 module.exports = {
     passportLocal : passport.authenticate("local", {session : false}),
     passportJwt : passport.authenticate("jwt", {session : false}),
-    passportGoogle : passport.authenticate('googleToken', { session: false }),
     passportVerify : passport.authenticate('verify', {session: false})
 }
