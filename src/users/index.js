@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const userCtrl = require("../controllers/users");
+const userCtrl = require("./ctrl");
 const passportConf = require("../passport");
 
 router
@@ -25,15 +25,15 @@ router
     .post(userCtrl.signInWithLinkedin);
 
 router
-    .route('/users/request-password-change')
+    .route('/request-password-change')
     .post(userCtrl.requestPasswordChange)
 
 router
-    .route('/users/profile/change-password')
+    .route('/profile/change-password')
     .post(passport.authenticate("jwt", {session : false}), userCtrl.changePassword);
 
 router
-    .route('/users/verify')
+    .route('/verify')
     .get(passport.authenticate('verify', {session: false}), userCtrl.verify )
     
 module.exports = router;

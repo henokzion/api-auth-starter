@@ -6,8 +6,8 @@ const {
     ExtractJwt
 } = require("passport-jwt");
 
-const User = require("./models/users");
-const config = require('./configuration');
+const User = require("./users/model");
+const config = require('../config');
 
 const JWT_SECRET = "this is a secret";
 
