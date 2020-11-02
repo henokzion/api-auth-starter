@@ -34,7 +34,7 @@ passport.use(new LocalStrategy({
     try {
         // Find the user given the email
         const user = await User.findOne({
-            "local.email": email
+            "email": email
         });
 
         console.log(email)

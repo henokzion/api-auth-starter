@@ -23,6 +23,7 @@ const create = async (data) => {
 
 const findUserByEmail = async (email) => {
     try {
+        if(!email) throw new ErrorHandler(400, "please provide a valid email");
         return await User.findOne({ email });
     } catch (error) {
         throw error

@@ -1,35 +1,9 @@
-const JWT = require("jsonwebtoken");
-const querystring = require("query-string")
-var request = require('request');
-const sgMail = require('@sendgrid/mail');
-
+const {signToken} = require("../_helpers/utils")
+const {sendVerifyEmail, sendPasswordChangeEmail} = require("../_helpers/email-manager")
 const {VERIFY_EMAILS} = require("../../config")
 
 const User = require("./model");
 const UserDal =  require("./dal")
-
-
-const signToken = (user) => {
-    return JWT.sign({
-        iss: "learningide",
-        sub: user.id,
-        iat: new Date().getTime(),
-        exp: new Date().setDate(new Date().getDate() + 1)
-    }, "this is a secret")
-}
-
-var sendVerifyEmail = (res, user) => {
-    const token = signToken(user);
-    var verificationText = `http://localhost:3000/confirmation?verify=${token}`;
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    const msg = {
-        to: user.local.email,
-        from: 'noreply@briter.com',
-        subject: 'verify your email',
-        text: verificationText
-    };
-    sgMail.send(msg);
-}
 
 const signUp = async (req, res, next) => {
     try {
@@ -56,51 +30,15 @@ const signIn = (req, res) => {
     });
 }
 
-var sendPasswordChangeEmail = async (res, user) => {
-        console.log(process.env.SENDGRID_API_KEY)
-    try {
-        const token = signToken(user);
-        var verificationText = `http://localhost:3000/changepasswordverify?verify=${token}`;
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        const msg = {
-            to: user.local.email,
-            from: 'noreply@briter.com',
-            subject: 'Change Your password',
-            text: verificationText
-        };
-        const mail = sgMail.send(msg);
-        console.log(mail);
-        res.status(200).json({
-            "message": "not verified"
-        });
-    } catch (error) {
-        res.json(error)
-    }
 
-}
 
 const requestPasswordChange = async (req, res) => {
-    if (req.body.email) {
-        User
-            .findOne({
-                method: 'local',
-                "local.email": req.body.email
-            })
-            .exec((err, user) => {
-                if (err)
-                    return res.status(400).json(err);
-                if (user)
-                    sendPasswordChangeEmail(res, user);
-                else
-                    res.status(404).json({
-                        "message": "user not found"
-                    });
-            })
-
-    } else {
-        res.json({
-            "message": "please provide a valid email"
-        });
+    try {
+        const {email} = req.body;
+        const user = await UserDal.findUserByEmail(email);
+        sendPasswordChangeEmail(user)
+    } catch (error) {
+        next(error)
     }
 }
 
